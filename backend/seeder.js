@@ -22,7 +22,38 @@ const importData = async () => {
         await User.deleteMany()
         // clears all these models, so not created more than once
         const createdUsers = await User.insertMany(users)
-    } catch {
+        const adminUser = createdUsers[0]._id
+        // we can hardcode the first user because we made them an admin
+        const sampleProducts = products.map(product => {
+            return { ...product, user: adminUser }
+        })
 
+        await Product.insertMany(sampleProducts)
+
+        console.log('Data Imported!'.green.inverse)
+        process.exit()
+    } catch(error) {
+        console.error(`${error}`.red.inverse)
+        process.exit(1)
     }
+}
+
+const destroyData = async () => {
+    try {
+        await Order.deleteMany()
+        await Product.deleteMany()
+        await User.deleteMany()
+
+        console.log('Data Imported!'.red.inverse)
+        process.exit()
+    } catch(error) {
+        console.error(`${error}`.red.inverse)
+        process.exit(1)
+    }
+}
+
+if(process.argv[2] === '-d') {
+    destroyData()
+} else {
+    importData()
 }
