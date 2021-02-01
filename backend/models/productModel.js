@@ -10,7 +10,7 @@ const reviewSchema = mongoose.Schema({
 
 const productSchema = mongoose.Schema({
     user: {
-        tyoe: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'User'
         // adds a relationship between the object and the user
@@ -61,6 +61,6 @@ const productSchema = mongoose.Schema({
     // by passing in timestamp as second set of options, 
  })
 
- const Product = mongoose.model('Produc', productSchema)
+ const Product = mongoose.model('Product', productSchema)
 //  creates model called 'Product'. using the productSchema
  export default Product

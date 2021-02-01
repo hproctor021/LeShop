@@ -23,7 +23,7 @@ const importData = async () => {
         // clears all these models, so not created more than once
         const createdUsers = await User.insertMany(users)
         const adminUser = createdUsers[0]._id
-        // we can hardcode the first user because we made them an admin
+        // we can hard code the first user because we made them an admin
         const sampleProducts = products.map(product => {
             return { ...product, user: adminUser }
         })
@@ -35,6 +35,7 @@ const importData = async () => {
     } catch(error) {
         console.error(`${error}`.red.inverse)
         process.exit(1)
+        // exit with failure --> pass in a 1
     }
 }
 
@@ -44,7 +45,7 @@ const destroyData = async () => {
         await Product.deleteMany()
         await User.deleteMany()
 
-        console.log('Data Imported!'.red.inverse)
+        console.log('Data Destroyed!'.red.inverse)
         process.exit()
     } catch(error) {
         console.error(`${error}`.red.inverse)

@@ -21,7 +21,7 @@ const userSchema = mongoose.Schema({
     }
 }, {
     timestamps: true
-    // by passing in timestamp as second set of options, 
+    // by passing in timestamp as second argument of options, 
  })
 
  const User = mongoose.model('User', userSchema)
