@@ -11,7 +11,7 @@ router.get('/',
 asyncHandler(async (req, res) => {
     // use async, because dealing with a promise below
     const products = await Product.find({})
-// whenever we use a mongoose method, it returns a promises, so can use .then() OR await
+    // whenever we use a mongoose method, it returns a promises, so can use .then() OR await
     res.json(products)
 }))
 
@@ -29,7 +29,7 @@ asyncHandler( async (req, res) => {
         res.status(404)
         // because we made custom errorHandler optional to set status ^^ 
         //if no status set, default will be 500 error
-        // can use throw new Error INSTEAD of res.json() because of the errorHandler as well
+        // can use throw new Error INSTEAD of res.json() because of the errorHandler
         throw new Error('Product not found')
     }
 }))
