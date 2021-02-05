@@ -5,6 +5,10 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import HomeScreen from './screens/HomeScreen'
 import ProductScreen from './screens/ProductScreen'
+import CartScreen from './screens/CartScreen'
+
+
+
 const App = () => {
   return (
     <Router>
@@ -23,6 +27,12 @@ const App = () => {
           path='/products/:id'
           component={ProductScreen}
           />
+
+          <Route 
+          path='/cart/:id?'
+          // the id is going to be optional, so we include a ? after it
+          component={CartScreen}
+          /> 
 
         </Container>
       </main>
