@@ -1,4 +1,4 @@
-import { CART_ADD_ITEM } from '../constants/cartConstants'
+import { CART_ADD_ITEM, CART_REMOVE_ITEM } from '../constants/cartConstants'
 
 // cartItems is an array because you can have multiple items in a cart
 export const cartReducer = (state = { cartItems: []}, action ) => {
@@ -23,6 +23,11 @@ export const cartReducer = (state = { cartItems: []}, action ) => {
                     cartItems: [...state.cartItems, item]
                 }
             }
+            case CART_REMOVE_ITEM:
+                return {
+                    ...state,
+                    cartItems: state.cartItems.filter( (x) => x.product !== action.payload)
+                }
         default:
             return state
     }
