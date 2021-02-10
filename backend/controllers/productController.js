@@ -5,7 +5,7 @@ import Product from '../models/productModel.js'
 // @route GET /api/products
 // @access Public Route
 
-const getProducts = asyncHander(async(req, res) => {
+const getProducts = asyncHandler(async(req, res) => {
      // use async, because dealing with a promise below
      const products = await Product.find({})
      // whenever we use a mongoose method, it returns a promises, so can use .then() OR await
@@ -16,7 +16,7 @@ const getProducts = asyncHander(async(req, res) => {
 // @route GET /api/products/:id
 // @access Public Route
 
-const getProductById = asyncHander(async(req, res) => {
+const getProductById = asyncHandler(async(req, res) => {
     const product = await Product.findById(req.params.id)
 
     if (product){

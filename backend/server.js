@@ -10,6 +10,7 @@ import colors from 'colors'
 // imports colors package to add color to console
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 import productRoutes from './routes/productRoutes.js'
+import userRoutes from './routes/userRoutes.js'
 
 
 dotenv.config()
@@ -18,12 +19,19 @@ connectDB()
 // calls to connect what was imported on line 7
 const app = express()
 
+
+app.use(express.json())
+// allows us to use json data in the body in userController
+
+
 app.get('/', (req, res) => {
     res.send('API is running...')
 })
 
 app.use('/api/products', productRoutes)
 // anything that goes to '/api/products', this will be linked to productRoutes
+app.use('/api/users', userRoutes)
+
 
 app.use(notFound)
 app.use(errorHandler)
