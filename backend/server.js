@@ -21,7 +21,7 @@ const app = express()
 
 
 app.use(express.json())
-// allows us to use json data in the body in userController
+// allows us to accept json data in the body in userController
 
 
 app.get('/', (req, res) => {
@@ -31,6 +31,7 @@ app.get('/', (req, res) => {
 app.use('/api/products', productRoutes)
 // anything that goes to '/api/products', this will be linked to productRoutes
 app.use('/api/users', userRoutes)
+// here we are moutning the userRoutes to '/api/users' (this is how we can just use '/login' in the userRoutes file)
 
 
 app.use(notFound)
