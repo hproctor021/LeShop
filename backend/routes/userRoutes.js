@@ -1,12 +1,14 @@
 import express from 'express'
 const router = express.Router()
 import { authUser,
-         getUserProfile 
+         getUserProfile,
+         registerUser 
 } from '../controllers/userController.js'
 import { protect } from '../middleware/authMiddleware.js'
 
 
 router.post('/login', authUser)
+router.route('/').post(registerUser)
 router.route('/profile').get(protect, getUserProfile)
 // because we want to apply our middleware to protect the getUserProfile route,
 // we inclue it as a first argument in .get()
