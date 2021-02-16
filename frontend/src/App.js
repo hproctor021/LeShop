@@ -6,6 +6,7 @@ import Footer from './components/Footer'
 import HomeScreen from './screens/HomeScreen'
 import ProductScreen from './screens/ProductScreen'
 import CartScreen from './screens/CartScreen'
+import LoginScreen from './screens/LoginScreen'
 
 
 
@@ -18,9 +19,8 @@ const App = () => {
         <Container>
 
           <Route 
-          path='/'
-          component={HomeScreen}
-          exact
+          path='/login'
+          component={LoginScreen}
           />
 
           <Route 
@@ -33,6 +33,12 @@ const App = () => {
           // the id is going to be optional, so we include a ? after it
           component={CartScreen}
           /> 
+
+          <Route 
+          path='/'
+          component={HomeScreen}
+          exact
+          />
 
         </Container>
       </main>
