@@ -21,7 +21,7 @@ const authUser = asyncHandler(async(req, res) => {
         email: user.email,
         isAdmin: user.isAdmin,
         //generateToken takes the user id as an argument * incude that here
-        token: generateToken(user._id)
+        token: generateToken(user._id),
     })
     //response returns all listed user info above
      } else {

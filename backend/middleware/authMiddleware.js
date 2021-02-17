@@ -26,7 +26,6 @@ const protect = asyncHandler(async(req, res, next) => {
             // insures that we recieved the token that was issued upon authentication
         }
     }
-
     if( !token ){
         res.status(401)
         throw new Error('Not authorized, no token')
