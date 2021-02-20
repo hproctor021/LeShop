@@ -1,7 +1,8 @@
 import { 
     CART_ADD_ITEM, 
     CART_REMOVE_ITEM,
-    CART_SAVE_SHIPPING_ADDRESS
+    CART_SAVE_SHIPPING_ADDRESS,
+    CART_SAVE_PAYMENT_METHOD
  } from '../constants/cartConstants'
 
 // cartItems is an array because you can have multiple items in a cart
@@ -40,6 +41,12 @@ export const cartReducer = (
                     ...state,
                     shippingAddress: action.payload
                     //passes in the data that we got from the ShippingScreen form
+                }
+            case CART_SAVE_PAYMENT_METHOD:
+                return {
+                    ...state,
+                    paymentMethod: action.payload
+                    //passes in the data that we got from the PaymentScreen form
                 }
         default:
             return state
