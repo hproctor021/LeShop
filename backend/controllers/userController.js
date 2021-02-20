@@ -11,7 +11,7 @@ const authUser = asyncHandler(async(req, res) => {
      const { email, password } = req.body
 
      const user = await User.findOne({ email })
-
+     
      if( user && (await user.matchPassword(password)) ){
     // see if user exists & password that we get from the body 
     //matched the encrypted password using bcrypt in the userModel
@@ -82,7 +82,7 @@ const getUserProfile = asyncHandler(async(req, res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
-            isAdmin: user.isAdmin
+            isAdmin: user.isAdmin,
         })
     } else {
         res.status(404)
@@ -93,4 +93,36 @@ const getUserProfile = asyncHandler(async(req, res) => {
 })
 
 
-export { authUser, getUserProfile, registerUser }
+// @desc: Update user profile
+// @route  PUT /api/users/profile
+// @access Private Route (need to be logged in)
+
+const updateUserProfile = asyncHandler(async(req, res) => {
+    // use async, because dealing with a promise below
+    const user = await User.findById(req.user._id)
+
+    if(user){
+        user.name = req.body.name || user.name
+        user.email = req.body.name || user.name
+        if(req.body.password){
+            user.password = req.body.password
+        }
+
+        const updatedUser = await user.save()
+
+        res.json({
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            isAdmin: updatedUser.isAdmin,
+            token: generateToken(updatedUser._id),
+        })
+
+    } else {
+        res.status(404)
+        throw new Error('User not found')
+    }
+})
+
+
+export { authUser, getUserProfile, registerUser, updateUserProfile }

@@ -8,6 +8,9 @@ import ProductScreen from './screens/ProductScreen'
 import CartScreen from './screens/CartScreen'
 import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
+import ProfileScreen from './screens/ProfileScreen'
+import ShippingScreen from './screens/ShippingScreen'
+
 
 
 
@@ -30,6 +33,11 @@ const App = () => {
           />
 
           <Route 
+            path='/profile'
+            component={ProfileScreen}
+          />
+
+          <Route 
           path='/products/:id'
           component={ProductScreen}
           />
@@ -39,6 +47,11 @@ const App = () => {
           // the id is going to be optional, so we include a ? after it
           component={CartScreen}
           /> 
+
+          <Route 
+            path='/shipping'
+            component={ShippingScreen}
+          />
 
           <Route 
           path='/'

@@ -6,8 +6,15 @@ import {
     USER_LOGOUT,
     USER_REGISTER_REQUEST,
     USER_REGISTER_SUCCESS,
-    USER_REGISTER_FAIL
+    USER_REGISTER_FAIL,
+    USER_DETAILS_REQUEST,
+    USER_DETAILS_SUCCESS,
+    USER_DETAILS_FAIL,
+    USER_UPDATE_PROFILE_REQUEST,
+    USER_UPDATE_PROFILE_SUCCESS,
+    USER_UPDATE_PROFILE_FAIL,
 } from "../constants/userConstants"
+
 
 export const login = ( email, password ) => async (dispatch) => {
     try {
@@ -71,12 +78,12 @@ export const register = ( name, email, password ) => async (dispatch) => {
 
         dispatch({
             type: USER_REGISTER_SUCCESS,
-            payload: data
+            payload: data,
         })
 
         dispatch({
             type: USER_LOGIN_SUCCESS,
-            payload: data
+            payload: data,
         })
         //  after register new user, log user in at that time
 
@@ -85,6 +92,90 @@ export const register = ( name, email, password ) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: USER_REGISTER_FAIL,
+            payload: error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message,
+        })
+    }
+}
+
+
+export const getUserDetails = (id) => async (dispatch, getState) => {
+    //  we use getState to get the user's token
+    try {
+        dispatch({
+            type: USER_DETAILS_REQUEST,
+        })
+
+        const { 
+            userLogin: { userInfo },
+        } = getState()
+        //  destructuring from getState, the userInfo that is within the userLogin
+        //  should give us access to the logged in user object
+
+        const config = {
+            headers: {
+                // 'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
+            },
+        }
+
+        const { data } = await axios.get(
+            `/api/users/${id}`,
+            config
+        )
+
+        dispatch({
+            type: USER_DETAILS_SUCCESS,
+            payload: data,
+        })
+
+    } catch (error) {
+        dispatch({
+            type: USER_DETAILS_FAIL,
+            payload: error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message,
+        })
+    }
+}
+
+
+export const updateUserProfile = (user) => async (dispatch, getState) => {
+    //  we use getState to get the user's token
+    try {
+        dispatch({
+            type: USER_UPDATE_PROFILE_REQUEST,
+        })
+
+        const { 
+            userLogin: { userInfo },
+        } = getState()
+        //  destructuring from getState, the userInfo that is within the userLogin
+        //  should give us access to the logged in user object
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
+            },
+        }
+
+        const { data } = await axios.put(
+            '/api/users/profile',
+            user,
+            config
+        )
+            //  pass in user object b/c that's the data we want to update with
+
+        dispatch({
+            type: USER_UPDATE_PROFILE_SUCCESS,
+            payload: data,
+        })
+
+    } catch (error) {
+        dispatch({
+            type: USER_UPDATE_PROFILE_FAIL,
             payload: error.response && error.response.data.message 
             ? error.response.data.message 
             : error.message,

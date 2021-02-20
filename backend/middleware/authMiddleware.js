@@ -8,7 +8,7 @@ const protect = asyncHandler(async(req, res, next) => {
     let token
 
     if( req.headers.authorization && 
-        req.headers.authorization.startsWith('Bearer')) {
+        req.headers.authorization.startsWith('Bearer')){
         try {
             token = req.headers.authorization.split(' ')[1]
             //this splits the Bearer from the token & accesses JUST the token
