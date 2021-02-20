@@ -11,6 +11,7 @@ import colors from 'colors'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
+import orderRoutes from './routes/orderRoutes.js'
 
 
 dotenv.config()
@@ -32,6 +33,7 @@ app.use('/api/products', productRoutes)
 // anything that goes to '/api/products', this will be linked to productRoutes
 app.use('/api/users', userRoutes)
 // here we are moutning the userRoutes to '/api/users' (this is how we can just use '/login' in the userRoutes file)
+app.use('/api/orders', orderRoutes)
 
 
 app.use(notFound)
