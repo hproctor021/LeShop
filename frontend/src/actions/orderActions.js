@@ -121,7 +121,7 @@ export const payOrder = (orderId, paymentResult) => async (dispatch, getState) =
             paymentResult,
             config
         )
-            //  pass in user object b/c that's the data we want to update with
+            //  pass in paymentResult b/c that's the data we want to update with
 
         dispatch({
             type: ORDER_PAY_SUCCESS,

@@ -35,6 +35,10 @@ app.use('/api/users', userRoutes)
 // here we are moutning the userRoutes to '/api/users' (this is how we can just use '/login' in the userRoutes file)
 app.use('/api/orders', orderRoutes)
 
+app.get('/api/config/paypal', (req, res) => 
+    res.send(process.env.PAYPAL_CLIENT_ID)
+)
+
 
 app.use(notFound)
 app.use(errorHandler)
