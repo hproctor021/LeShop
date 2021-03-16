@@ -124,5 +124,16 @@ const updateUserProfile = asyncHandler(async(req, res) => {
     }
 })
 
+// @desc: Get all users
+// @route  GET /api/users
+// @access Private/ Admin Route (need to be logged in)
 
-export { authUser, getUserProfile, registerUser, updateUserProfile }
+const getUsers = asyncHandler(async(req, res) => {
+    // use async, because dealing with a promise below
+    const users = await User.find({})
+    res.json(users)
+
+})
+
+
+export { authUser, getUserProfile, registerUser, updateUserProfile, getUsers }
