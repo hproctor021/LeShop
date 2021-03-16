@@ -106,6 +106,27 @@ const ProfileScreen = ({ location, history }) => {
             </Col>
             <Col md={9}>
                 <h2>My Orders</h2>
+                {loadingOrders
+                ? <Loader />
+                : errorOrders
+                ? <Message variant='danger'>{errorOrders}</Message>
+                : (
+                    <Table triped border hover responsive className='table-sm'>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>DATE</th>
+                                <th>TOTAL</th>
+                                <th>PAID</th>
+                                <th>DELIVERED</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {orders.map(orders)}
+                        </tbody>
+                    </Table>
+                )}
             </Col>
         </Row>
     )
