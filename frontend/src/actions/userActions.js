@@ -14,6 +14,9 @@ import {
     USER_UPDATE_PROFILE_SUCCESS,
     USER_UPDATE_PROFILE_FAIL,
     USER_DETAILS_RESET,
+    USER_LIST_REQUEST,
+    USER_LIST_SUCCESS,
+    USER_LIST_FAIL,
 } from "../constants/userConstants"
 import { ORDER_LIST_MY_RESET } from "../constants/orderConstants"
 
@@ -179,6 +182,47 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
     } catch (error) {
         dispatch({
             type: USER_UPDATE_PROFILE_FAIL,
+            payload: error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message,
+        })
+    }
+}
+
+
+export const listUsers = () => async (dispatch, getState) => {
+    //  we use getState to get the user's token
+    try {
+        dispatch({
+            type: USER_LIST_REQUEST,
+        })
+
+        const { 
+            userLogin: { userInfo },
+        } = getState()
+        //  destructuring from getState, the userInfo that is within the userLogin
+        //  should give us access to the logged in user object
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`
+            },
+        }
+
+        const { data } = await axios.get(
+            '/api/users',
+            config
+        )
+            //  pass in user object b/c that's the data we want to update with
+
+        dispatch({
+            type: USER_LIST_SUCCESS,
+            payload: data,
+        })
+
+    } catch (error) {
+        dispatch({
+            type: USER_LIST_FAIL,
             payload: error.response && error.response.data.message 
             ? error.response.data.message 
             : error.message,
