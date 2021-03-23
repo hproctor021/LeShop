@@ -112,7 +112,7 @@ const ProfileScreen = ({ location, history }) => {
                 : errorOrders
                 ? <Message variant='danger'>{errorOrders}</Message>
                 : (
-                    <Table triped border hover responsive className='table-sm'>
+                    <Table striped bordered hover responsive className='table-sm'>
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -144,7 +144,7 @@ const ProfileScreen = ({ location, history }) => {
                                         )}
                                      </td>
                                      <td>
-                                         <LinkContainer id={`/order/${order._id}`}>
+                                         <LinkContainer id={`/orders/${order._id}`}>
                                              <Button className='btn-sm' variant='light'>
                                                  Details
                                             </Button>
