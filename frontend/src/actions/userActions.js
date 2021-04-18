@@ -21,6 +21,9 @@ import {
     USER_DELETE_REQUEST,
     USER_DELETE_FAIL,
     USER_DELETE_SUCCESS,
+    USER_UPDATE_REQUEST,
+    USER_UPDATE_SUCCESS,
+    USER_UPDATE_FAIL,
 
 } from "../constants/userConstants"
 import { ORDER_LIST_MY_RESET } from "../constants/orderConstants"
@@ -260,7 +263,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
             },
         }
 
-        const { data } = await axios.delete(
+        await axios.delete(
             `/api/users/${id}`,
             config
         )
@@ -271,6 +274,49 @@ export const deleteUser = (id) => async (dispatch, getState) => {
     } catch (error) {
         dispatch({
             type: USER_DELETE_FAIL,
+            payload: error.response && error.response.data.message 
+            ? error.response.data.message 
+            : error.message,
+        })
+    }
+}
+
+
+export const updateUser = (user) => async (dispatch, getState) => {
+    //  we use getState to get the user's token
+    try {
+        dispatch({
+            type: USER_UPDATE_REQUEST,
+        })
+
+        const { 
+            userLogin: { userInfo },
+        } = getState()
+        //  destructuring from getState, the userInfo that is within the userLogin
+        //  should give us access to the logged in user object
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
+            },
+        }
+
+        const { data} = await axios.put(
+            `/api/users/${user._id}`, // use ._id b/c we passed in the whole user on line 283
+            user,
+            config
+        )
+            //  pass in user object b/c that's the data we want to update with
+
+        dispatch({ type: USER_UPDATE_SUCCESS })
+
+        dispatch({ type: USER_DETAILS_SUCCESS, payload: data })
+
+
+    } catch (error) {
+        dispatch({
+            type: USER_UPDATE_FAIL,
             payload: error.response && error.response.data.message 
             ? error.response.data.message 
             : error.message,
