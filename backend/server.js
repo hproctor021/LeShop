@@ -1,5 +1,7 @@
 // Setting all of the routes
 
+import path from 'path'
+// node js module to work with file paths
 import express from 'express'
 // const express = require('express')
 import dotenv from 'dotenv'
@@ -12,6 +14,7 @@ import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
+import uploadRoutes from './routes/uploadRoutes.js'
 
 
 dotenv.config()
@@ -34,10 +37,19 @@ app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
 // here we are moutning the userRoutes to '/api/users' (this is how we can just use '/login' in the userRoutes file)
 app.use('/api/orders', orderRoutes)
+app.use('/api/upload', uploadRoutes)
+// set endpoint ^^ for admin to upload an image for a product
+
 
 app.get('/api/config/paypal', (req, res) => 
     res.send(process.env.PAYPAL_CLIENT_ID)
 )
+
+const __dirname = path.resolve()
+// 
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
+// to make a folder static ^^              ^^ takes us to the current folder (directory name)--> in this case the uploads folder
+//                                        BUT that's only available when using common JS, NOT ES6, so we create the const __dirname to resolve that
 
 
 app.use(notFound)
