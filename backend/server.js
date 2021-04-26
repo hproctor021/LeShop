@@ -37,6 +37,7 @@ app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
 // here we are moutning the userRoutes to '/api/users' (this is how we can just use '/login' in the userRoutes file)
 app.use('/api/orders', orderRoutes)
+
 app.use('/api/upload', uploadRoutes)
 // set endpoint ^^ for admin to upload an image for a product
 
@@ -46,7 +47,6 @@ app.get('/api/config/paypal', (req, res) =>
 )
 
 const __dirname = path.resolve()
-// 
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 // to make a folder static ^^              ^^ takes us to the current folder (directory name)--> in this case the uploads folder
 //                                        BUT that's only available when using common JS, NOT ES6, so we create the const __dirname to resolve that
