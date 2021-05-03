@@ -6,7 +6,7 @@
   "type": "module",
   "engines": {
     "node": "15.4.0",
-    "npm": "7.0.15",
+    "npm": "7.0.15"
   },
   "scripts": {
     "start": "node backend/server",
