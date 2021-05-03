@@ -37,8 +37,7 @@ const upload = multer({ storage, fileFilter: ((req, file, cb) => checkFileType(f
 router.post('/', upload.single('image'), (req, res) => {
     //only uploading a single file so use upload.single & call that upload 'image
     // using'/' b/c this file will be associated with /api/upload in server.js
-
-    req.send(`/${req.file.path}`)
+    res.send(`/${req.file.path}`)
     //returns the path
 } )
 
